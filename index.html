@@ -73,7 +73,7 @@ section{display:flex;flex-direction:column;gap:2rem}
 .steps li{counter-increment:s;display:flex;flex-direction:column;gap:.4rem;padding-top:1rem;border-top:2px solid var(--ink)}
 .steps li::before{content:"Step " counter(s);font:600 .75rem var(--mono);color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
 .steps p{color:var(--muted)}
-.plans{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;max-width:48rem}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:72rem}
 .plan{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.75rem;display:flex;flex-direction:column;gap:1.1rem}
 .plan.best{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
 .plan .price{font:800 2.6rem var(--display);font-variant-numeric:tabular-nums}
@@ -99,7 +99,7 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
 @media (prefers-reduced-motion:reduce){.btn{transition:none}}
 </style>
 </head>
-<body data-weekly="" data-monthly="" data-portal="">
+<body data-weekly="" data-monthly="" data-lifetime="" data-portal="">
 <div class="wrap">
 <nav>
   <a class="brand" href="#top">PropCall<span>Sheet</span></a>
@@ -156,7 +156,7 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
 </section>
 
 <section id="pricing">
-  <div class="head"><span class="eyebrow">Pricing</span><h2>Full indicator access.</h2><p class="fine">Both plans include the full indicator and every update.</p></div>
+  <div class="head"><span class="eyebrow">Pricing</span><h2>Full indicator access.</h2><p class="fine">Every plan includes the full indicator and every update.</p></div>
   <div class="plans">
     <div class="plan">
       <h3>Weekly</h3>
@@ -172,8 +172,15 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
       <ul><li>Everything in Weekly</li><li>Lower cost per week</li><li>Priority support</li><li>Cancel any time</li></ul>
       <a class="btn primary" href="#pricing" data-checkout="monthly">Start monthly</a>
     </div>
+    <div class="plan">
+      <h3>Lifetime</h3>
+      <div class="price">$499<small> once</small></div>
+      <p class="fine">Pay once, keep the indicator for good.</p>
+      <ul><li>Lifetime indicator access</li><li>Every indicator update</li><li>No renewals</li><li>Priority support</li></ul>
+      <a class="btn ghost" href="#pricing" data-checkout="lifetime">Buy lifetime</a>
+    </div>
   </div>
-  <p class="fine" id="checkout-note">Checkout is on Stripe. Subscriptions renew automatically. If a payment lapses, indicator access is removed until it is renewed.</p>
+  <p class="fine" id="checkout-note">Checkout is on Stripe. Weekly and monthly plans renew automatically; lifetime is a single payment. If a payment lapses, indicator access is removed until it is renewed.</p>
 </section>
 
 <section id="faq">
