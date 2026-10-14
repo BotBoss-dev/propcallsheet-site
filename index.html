@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>PropCallSheet Signals</title>
-<meta name="description" content="TradingView indicator plus Telegram trade alerts for MNQ, MES and Micro Bitcoin futures.">
+<meta name="description" content="TradingView indicator with entries, stops and targets for MNQ, MES and Micro Bitcoin futures.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -99,7 +99,7 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
 @media (prefers-reduced-motion:reduce){.btn{transition:none}}
 </style>
 </head>
-<body data-bot="PropCallSheetSignals_bot">
+<body data-weekly="" data-monthly="" data-portal="">
 <div class="wrap">
 <nav>
   <a class="brand" href="#top">PropCall<span>Sheet</span></a>
@@ -108,13 +108,13 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
 
 <header class="hero" id="top">
   <div class="copy">
-    <span class="eyebrow">TradingView indicator + Telegram alerts</span>
-    <h1>Every call on your chart and in your pocket.</h1>
-    <p class="lead">A confluence indicator for Micro Nasdaq, Micro S&amp;P and Micro Bitcoin futures. It marks entries, reversals, stop loss and take profit on your TradingView chart, and the Telegram bot sends the same call to your phone, then follows the trade until it closes.</p>
+    <span class="eyebrow">TradingView indicator</span>
+    <h1>Every call, right on your chart.</h1>
+    <p class="lead">A confluence indicator for Micro Nasdaq, Micro S&amp;P and Micro Bitcoin futures. It marks entries, reversals, stop loss and take profit on your TradingView chart. Each call shows its targets and is marked when they hit or the stop is taken.</p>
     <div class="ctas"><a class="btn primary" href="#pricing">See plans</a><a class="btn ghost" href="#how">How it works</a></div>
   </div>
-  <article class="alert" aria-label="Example Telegram alert">
-    <header><span>Telegram · callout</span><span class="tag">Example format</span></header>
+  <article class="alert" aria-label="Example call">
+    <header><span>On your chart · call</span><span class="tag">Example format</span></header>
     <div class="side"><span class="dir">LONG</span><span>MNQ</span></div>
     <dl>
       <dt>Entry</dt><dd>21,450.25</dd>
@@ -124,7 +124,7 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
       <dt>Session</dt><dd>New York open</dd>
       <dt>Timeframe</dt><dd>5m · 1h bias</dd>
     </dl>
-    <div class="note">Follow-ups arrive in the same chat: stop moved to breakeven, partial taken, close now. Prices shown are illustrative only.</div>
+    <div class="note">Entry, stop and targets are drawn as lines on the chart. Prices shown are illustrative only.</div>
   </article>
 </header>
 
@@ -135,11 +135,11 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
 </div>
 
 <section id="features">
-  <div class="head"><span class="eyebrow">What you get</span><h2>One package, two places to see it.</h2></div>
+  <div class="head"><span class="eyebrow">What you get</span><h2>One indicator, everything on the chart.</h2></div>
   <div class="features">
     <div class="feature"><span class="k">Confluence</span><h3>Several strategies, one call</h3><p>A signal prints only when multiple independent models agree, rather than relying on a single trigger.</p></div>
     <div class="feature"><span class="k">On chart</span><h3>Levels drawn for you</h3><p>Entries, reversal warnings, stop loss and take profit lines plot directly on TradingView, on the timeframe you trade.</p></div>
-    <div class="feature"><span class="k">Telegram</span><h3>Alerts that follow through</h3><p>Each callout is tracked live. You get updates when the stop moves, a target fills, or it is time to close.</p></div>
+    <div class="feature"><span class="k">Alerts</span><h3>TradingView alerts</h3><p>Set a TradingView alert on the indicator and get each new call as a push notification from the TradingView app.</p></div>
     <div class="feature"><span class="k">Context</span><h3>Session aware</h3><p>Weighs the Asia, London and New York sessions, timeframe alignment and seasonality before a call goes out.</p></div>
     <div class="feature"><span class="k">News</span><h3>Quiet around big releases</h3><p>Holds off around scheduled high-impact events such as CPI, FOMC and payrolls, when spreads widen and moves get erratic.</p></div>
     <div class="feature"><span class="k">Updates</span><h3>Keeps improving</h3><p>The models are reviewed and retuned on new market data, and updates reach the indicator without a reinstall.</p></div>
@@ -149,31 +149,31 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
 <section id="how">
   <div class="head"><span class="eyebrow">How it works</span><h2>Set up in a few minutes.</h2></div>
   <ol class="steps">
-    <li><h3>Subscribe</h3><p>Pick weekly or monthly and check out. You get a welcome message with your access details.</p></li>
-    <li><h3>Connect</h3><p>Send us your TradingView username for indicator access and join the private Telegram channel.</p></li>
-    <li><h3>Trade your plan</h3><p>Add the indicator to MNQ, MES or MBT and get callouts on your phone. Cancel any time and access ends with your period.</p></li>
+    <li><h3>Subscribe</h3><p>Pick weekly or monthly and pay securely with Stripe. Enter your TradingView username at checkout.</p></li>
+    <li><h3>Get access</h3><p>We add your TradingView username to the invite-only indicator, usually within a few hours (always within 24). It appears under Indicators, Invite-only scripts.</p></li>
+    <li><h3>Trade your plan</h3><p>Add the indicator to MNQ, MES or MBT. Cancel any time and access ends with your period.</p></li>
   </ol>
 </section>
 
 <section id="pricing">
-  <div class="head"><span class="eyebrow">Pricing</span><h2>Indicator and alerts together.</h2><p class="fine">Both plans include the full indicator and the Telegram channel.</p></div>
+  <div class="head"><span class="eyebrow">Pricing</span><h2>Full indicator access.</h2><p class="fine">Both plans include the full indicator and every update.</p></div>
   <div class="plans">
     <div class="plan">
       <h3>Weekly</h3>
       <div class="price">$14.99<small> / week</small></div>
       <p class="fine">Try it for a week. Cancel anytime.</p>
-      <ul><li>TradingView indicator access</li><li>Telegram callouts and trade updates</li><li>MNQ, MES and MBT</li><li>Cancel any time</li></ul>
+      <ul><li>TradingView indicator access</li><li>Every update included</li><li>MNQ, MES and MBT</li><li>Cancel any time</li></ul>
       <a class="btn ghost" href="#pricing" data-checkout="weekly">Start weekly</a>
     </div>
     <div class="plan best">
       <h3>Monthly</h3>
-      <div class="price">$44.99<small> / month</small></div>
-      <p class="fine">Best value: save about 30% vs weekly.</p>
+      <div class="price">$49.99<small> / month</small></div>
+      <p class="fine">Best value: save about 20% vs weekly.</p>
       <ul><li>Everything in Weekly</li><li>Lower cost per week</li><li>Priority support</li><li>Cancel any time</li></ul>
       <a class="btn primary" href="#pricing" data-checkout="monthly">Start monthly</a>
     </div>
   </div>
-  <p class="fine" id="checkout-note">Checkout opens in Telegram: tap a plan, press Start, and the bot sends your secure Stripe payment link. Subscriptions renew automatically. If a payment lapses, indicator and Telegram access are removed until it is renewed.</p>
+  <p class="fine" id="checkout-note">Checkout is on Stripe. Subscriptions renew automatically. If a payment lapses, indicator access is removed until it is renewed.</p>
 </section>
 
 <section id="faq">
@@ -183,8 +183,8 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
     <details><summary>Which markets are covered?</summary><p>Micro E-mini Nasdaq-100 (MNQ), Micro E-mini S&amp;P 500 (MES) and CME Micro Bitcoin (MBT). The signals also plot on the full-size contracts, since price action is the same.</p></details>
     <details><summary>Does it place trades for me?</summary><p>No. It is an analysis and alert tool. You decide whether to take a trade, and you place and manage orders with your own broker.</p></details>
     <details><summary>Can I use it for prop firm evaluations?</summary><p>Many prop firms allow third-party indicators and alerts, but rules differ. Check your firm's terms on signal services and copy trading before using it on a funded or evaluation account.</p></details>
-    <details><summary>How do I cancel?</summary><p>Send <code>/billing</code> to the bot for your Stripe link to cancel, change card or see invoices. Access stays active until the end of the period you paid for.</p></details>
-    <details><summary>I paid on Stripe but have no access</summary><p>Send <code>/claim</code> and the email you used at checkout to the bot, for example <code>/claim you@example.com</code>.</p></details>
+    <details><summary>How do I cancel?</summary><p>Use the <a href="#" data-portal-link>manage subscription</a> page and sign in with your checkout email to cancel, change card or see invoices. Access stays active until the end of the period you paid for.</p></details>
+    <details><summary>I paid but have no access</summary><p>Access is added by hand, usually within a few hours. If it has been more than 24 hours, or you mistyped your TradingView username, email <a href="mailto:swainwebstudio@gmail.com">swainwebstudio@gmail.com</a> from your checkout email.</p></details>
     <details><summary>What is your win rate?</summary><p>We do not publish performance figures. Past results, real or simulated, do not predict future results, and any number we quoted could mislead you. Judge the signals on your own chart before risking money.</p></details>
   </div>
 </section>
@@ -192,17 +192,21 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
 <section id="risk" class="risk" aria-labelledby="risk-h">
   <h2 id="risk-h">Risk disclosure</h2>
   <p>Trading futures and cryptocurrency involves substantial risk of loss and is not suitable for every investor. Leverage means you can lose more than your initial deposit. Only trade with money you can afford to lose.</p>
-  <p>PropCallSheet provides educational and informational tools only. Nothing on this site, in the indicator or in the Telegram channel is financial, investment or trading advice, or a recommendation to buy or sell any instrument. We are not a registered investment adviser, broker or commodity trading advisor.</p>
+  <p>PropCallSheet provides educational and informational tools only. Nothing on this site or in the indicator is financial, investment or trading advice, or a recommendation to buy or sell any instrument. We are not a registered investment adviser, broker or commodity trading advisor.</p>
   <p>Signals can be wrong, late, or missed because of data, platform or connection issues. Hypothetical or simulated performance has inherent limitations and does not represent actual trading. You are solely responsible for your own trading decisions and results.</p>
 </section>
 
 <footer><span>© 2026 PropCallSheet · <a href="legal.html#terms">Terms</a> · <a href="legal.html#privacy">Privacy</a> · <a href="legal.html#refunds">Refunds</a> · <a href="legal.html#contact">Contact</a></span><span>TradingView is a trademark of TradingView, Inc. CME micro contracts are products of CME Group. Not affiliated with either.</span></footer>
 </div>
 <script>
-// One place to switch checkout on: set data-bot on <body> to the customer bot's username (no @).
-(function(){var bot=document.body.dataset.bot;document.querySelectorAll('[data-checkout]').forEach(function(a){
-  if(bot){a.href='https://t.me/'+bot+'?start=subscribe';a.target='_blank';a.rel='noopener'}
-  else{a.textContent='Opening soon';a.setAttribute('aria-disabled','true')}});})();
+// One place to switch checkout on: put the Stripe payment links on <body> (data-weekly, data-monthly) and the
+// customer portal login link (data-portal). Empty links show "Opening soon".
+(function(){var d=document.body.dataset;document.querySelectorAll('[data-checkout]').forEach(function(a){
+  var url=d[a.dataset.checkout];
+  if(url){a.href=url;a.rel='noopener'}
+  else{a.textContent='Opening soon';a.setAttribute('aria-disabled','true')}});
+  document.querySelectorAll('[data-portal-link]').forEach(function(a){
+    if(d.portal){a.href=d.portal;a.rel='noopener'}else{a.removeAttribute('href')}});})();
 </script>
 </body>
 </html>
