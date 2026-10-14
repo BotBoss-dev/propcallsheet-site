@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PropCallSheet Terms</title>
+<meta name="description" content="Terms of service, privacy, refund policy and contact for PropCallSheet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=IBM+Plex+Sans:wght@400;600&family=JetBrains+Mono:wght@600&display=swap">
+<style>
+/* Layout: one narrow reading column; hero pairs the pitch with a sample alert card, then a contract strip, features, plans, FAQ, disclaimer. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --ink:#111827; --muted:#566074; --line:#d9dee7;
+  --accent:#1f5eff; --accent-ink:#ffffff; --long:#0f8a5f; --short:#c2410c; --warn-bg:#fff6e5; --warn-line:#e7b45a;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0c111b; --surface:#141b28; --ink:#e8ecf3; --muted:#9aa5b8; --line:#263044;
+  --accent:#6f9bff; --accent-ink:#0c111b; --long:#3fcf95; --short:#ff8a5c; --warn-bg:#231c0e; --warn-line:#8a6a2c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c111b; --surface:#141b28; --ink:#e8ecf3; --muted:#9aa5b8; --line:#263044;
+  --accent:#6f9bff; --accent-ink:#0c111b; --long:#3fcf95; --short:#ff8a5c; --warn-bg:#231c0e; --warn-line:#8a6a2c; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.6 var(--body);padding-inline:16px}
+.wrap{max-width:68rem;margin-inline:auto;display:flex;flex-direction:column;gap:5rem;padding-block:1.5rem 4rem}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(2.3rem,6vw,4rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0;max-width:62ch}
+.eyebrow{font:600 .75rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+section{display:flex;flex-direction:column;gap:.8rem;scroll-margin-top:1rem}
+ul{margin:0;padding-left:1.2rem;max-width:62ch}
+.fine{color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="wrap" style="gap:3rem">
+<nav><a href="index.html" style="font:800 1.2rem var(--display);color:var(--ink);text-decoration:none">PropCall<span style="color:var(--accent)">Sheet</span></a><a href="index.html#pricing">Pricing</a></nav>
+<p class="fine">Last updated 14 October 2026. Plain-language summary of the rules for using PropCallSheet. Not legal advice.</p>
+
+<section id="terms">
+  <span class="eyebrow">Terms of service</span><h2>Using PropCallSheet</h2>
+  <ul>
+    <li>PropCallSheet sells a subscription to a TradingView indicator and Telegram trade alerts. It is an educational and informational tool, not financial, investment or trading advice, and not a recommendation to buy or sell anything.</li>
+    <li>We are not a registered investment adviser, broker or commodity trading advisor. Alerts are the same for every subscriber and are not tailored to you or your account.</li>
+    <li>You make and are responsible for every trading decision. Futures and crypto trading can lose more than you deposit. Read the <a href="index.html#risk">risk disclosure</a> before subscribing.</li>
+    <li>Your subscription is for you alone. Sharing, reselling or reposting the indicator or the alerts ends your access without a refund.</li>
+    <li>Signals can be wrong, late or missed because of data, platform or connection problems. The service is provided as is, and our total liability is limited to what you paid in the last billing period.</li>
+    <li>We may change features or these terms; changes apply from your next billing period.</li>
+  </ul>
+</section>
+
+<section id="refunds">
+  <span class="eyebrow">Billing and refunds</span><h2>Renewals, cancelling, refunds</h2>
+  <ul>
+    <li>Plans renew automatically every week ($14.99) or month ($44.99) until you cancel. Payments are handled by Stripe.</li>
+    <li>Cancel any time: send <code>/billing</code> to the bot for your Stripe link. You keep access until the end of the period you already paid for.</li>
+    <li>Payments are not refunded for partial periods. If you were charged by mistake or could not get access, contact us within 7 days and we will make it right.</li>
+    <li>If a payment fails, access stays for 24 hours past the paid period, then pauses until it is renewed.</li>
+  </ul>
+</section>
+
+<section id="privacy">
+  <span class="eyebrow">Privacy</span><h2>What we keep</h2>
+  <ul>
+    <li>Your Telegram user id and chat, to send you alerts.</li>
+    <li>Your TradingView username, only if you give it to unlock the indicator.</li>
+    <li>Your plan, renewal date and payment status from Stripe. Card details stay with Stripe; we never see them.</li>
+    <li>The email you used at checkout, only to match a payment to you.</li>
+    <li>We do not sell or share your data, except with Stripe, Telegram and TradingView to run the service. Ask us any time to see or delete your data; deleting it ends your access.</li>
+  </ul>
+</section>
+
+<section id="contact">
+  <span class="eyebrow">Contact</span><h2>Support</h2>
+  <p>Email <a href="mailto:swainwebstudio@gmail.com">swainwebstudio@gmail.com</a>, or message the bot in Telegram.</p>
+</section>
+
+<footer class="fine">© 2026 PropCallSheet</footer>
+</div>
+</body>
+</html>
