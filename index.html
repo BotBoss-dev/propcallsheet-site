@@ -99,7 +99,7 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
 @media (prefers-reduced-motion:reduce){.btn{transition:none}}
 </style>
 </head>
-<body>
+<body data-bot="">
 <div class="wrap">
 <nav>
   <a class="brand" href="#top">PropCall<span>Sheet</span></a>
@@ -163,17 +163,17 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
       <div class="price">$14.99<small> / week</small></div>
       <p class="fine">Try it for a week. Cancel anytime.</p>
       <ul><li>TradingView indicator access</li><li>Telegram callouts and trade updates</li><li>MNQ, MES and MBT</li><li>Cancel any time</li></ul>
-      <a class="btn ghost" href="#checkout-weekly" data-checkout="weekly">Start weekly</a>
+      <a class="btn ghost" href="#pricing" data-checkout="weekly">Start weekly</a>
     </div>
     <div class="plan best">
       <h3>Monthly</h3>
       <div class="price">$44.99<small> / month</small></div>
       <p class="fine">Best value: save about 30% vs weekly.</p>
       <ul><li>Everything in Weekly</li><li>Lower cost per week</li><li>Priority support</li><li>Cancel any time</li></ul>
-      <a class="btn primary" href="#checkout-monthly" data-checkout="monthly">Start monthly</a>
+      <a class="btn primary" href="#pricing" data-checkout="monthly">Start monthly</a>
     </div>
   </div>
-  <p class="fine">Subscriptions renew automatically. If a payment lapses, indicator and Telegram access are removed until it is renewed.</p>
+  <p class="fine" id="checkout-note">Checkout opens in Telegram: tap a plan, press Start, and the bot sends your secure Stripe payment link. Subscriptions renew automatically. If a payment lapses, indicator and Telegram access are removed until it is renewed.</p>
 </section>
 
 <section id="faq">
@@ -183,7 +183,8 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
     <details><summary>Which markets are covered?</summary><p>Micro E-mini Nasdaq-100 (MNQ), Micro E-mini S&amp;P 500 (MES) and CME Micro Bitcoin (MBT). The signals also plot on the full-size contracts, since price action is the same.</p></details>
     <details><summary>Does it place trades for me?</summary><p>No. It is an analysis and alert tool. You decide whether to take a trade, and you place and manage orders with your own broker.</p></details>
     <details><summary>Can I use it for prop firm evaluations?</summary><p>Many prop firms allow third-party indicators and alerts, but rules differ. Check your firm's terms on signal services and copy trading before using it on a funded or evaluation account.</p></details>
-    <details><summary>How do I cancel?</summary><p>Cancel from the billing link in your welcome message or by messaging the bot. Access stays active until the end of the period you paid for.</p></details>
+    <details><summary>How do I cancel?</summary><p>Send <code>/billing</code> to the bot for your Stripe link to cancel, change card or see invoices. Access stays active until the end of the period you paid for.</p></details>
+    <details><summary>I paid on Stripe but have no access</summary><p>Send <code>/claim</code> and the email you used at checkout to the bot, for example <code>/claim you@example.com</code>.</p></details>
     <details><summary>What is your win rate?</summary><p>We do not publish performance figures. Past results, real or simulated, do not predict future results, and any number we quoted could mislead you. Judge the signals on your own chart before risking money.</p></details>
   </div>
 </section>
@@ -195,7 +196,13 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
   <p>Signals can be wrong, late, or missed because of data, platform or connection issues. Hypothetical or simulated performance has inherent limitations and does not represent actual trading. You are solely responsible for your own trading decisions and results.</p>
 </section>
 
-<footer><span>© 2026 PropCallSheet</span><span>TradingView is a trademark of TradingView, Inc. CME micro contracts are products of CME Group. Not affiliated with either.</span></footer>
+<footer><span>© 2026 PropCallSheet · <a href="legal.html#terms">Terms</a> · <a href="legal.html#privacy">Privacy</a> · <a href="legal.html#refunds">Refunds</a> · <a href="legal.html#contact">Contact</a></span><span>TradingView is a trademark of TradingView, Inc. CME micro contracts are products of CME Group. Not affiliated with either.</span></footer>
 </div>
+<script>
+// One place to switch checkout on: set data-bot on <body> to the customer bot's username (no @).
+(function(){var bot=document.body.dataset.bot;document.querySelectorAll('[data-checkout]').forEach(function(a){
+  if(bot){a.href='https://t.me/'+bot+'?start=subscribe';a.target='_blank';a.rel='noopener'}
+  else{a.textContent='Opening soon';a.setAttribute('aria-disabled','true')}});})();
+</script>
 </body>
 </html>
