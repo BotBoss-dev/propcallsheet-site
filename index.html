@@ -3,16 +3,38 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PropCallSheet Signals</title>
-<meta name="description" content="Private Telegram channel with signal calls for MNQ, MES and Micro Bitcoin futures, plus the PropCallSheet TradingView indicator free for members.">
+<title>PropCallSheet Ω Signals</title>
+<meta name="description" content="PropCallSheet Ω Signals: a TradingView indicator for MNQ, MES and MBT with BUY/SELL calls, trade boxes, zones and a dashboard, plus the private Telegram signals channel. Founding 50: $50 once.">
+<!--
+  ============================================================
+  BUY LINKS: the ONLY place to change Stripe checkout links.
+  Swap the buy.stripe.com/test_... links in PCS_CHECKOUT below
+  for the LIVE Stripe payment links (and the live portal link).
+  founder  = Founding 50, $50 once (set "limit 50" in Stripe)
+  lifetime = Lifetime, $499 once
+  phase    = "founder" while Founding 50 sells, "regular" after sellout
+  ============================================================
+-->
+<script>
+window.PCS_CHECKOUT = {
+  phase:    "founder",
+  founder:  "https://buy.stripe.com/test_5kQ3cv8ub0bh5Fibk22wU00",
+  lifetime: "https://buy.stripe.com/test_aFa7sL9yfaPVd7K9bU2wU03",
+  weekly:   "",
+  monthly:  "",
+  subsOpen: false,
+  portal:   "https://billing.stripe.com/p/login/test_5kQ3cv8ub0bh5Fibk22wU00"
+};
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;600&family=JetBrains+Mono:wght@600&display=swap">
 <style>
-/* Layout: one narrow reading column; hero pairs the pitch with a sample alert card, then a contract strip, features, plans, FAQ, disclaimer. */
+/* Layout: one narrow reading column, mobile first. Hero = pitch + big buy button + sample call, then chart, features, install steps, plans, FAQ, risk. */
 :root{
   --bg:#f3f5f8; --surface:#ffffff; --ink:#111827; --muted:#566074; --line:#d9dee7;
   --accent:#1f5eff; --accent-ink:#ffffff; --long:#0f8a5f; --short:#c2410c; --warn-bg:#fff6e5; --warn-line:#e7b45a;
+  --chart:#0b0f1a; --chart-ink:#e5e7eb; --buy:#00e676; --sell:#ff1744; --entry:#2962ff;
   --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
   --body:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -25,46 +47,61 @@
   --bg:#0c111b; --surface:#141b28; --ink:#e8ecf3; --muted:#9aa5b8; --line:#263044;
   --accent:#6f9bff; --accent-ink:#0c111b; --long:#3fcf95; --short:#ff8a5c; --warn-bg:#231c0e; --warn-line:#8a6a2c; color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.6 var(--body);padding-inline:16px}
-.wrap{max-width:68rem;margin-inline:auto;display:flex;flex-direction:column;gap:5rem;padding-block:1.5rem 4rem}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.6 var(--body);padding-inline:16px;overflow-x:hidden}
+.wrap{max-width:68rem;margin-inline:auto;display:flex;flex-direction:column;gap:5rem;padding-block:1.25rem 4rem}
 a{color:var(--accent)}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
 h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
-h1{font-size:clamp(2.3rem,6vw,4rem);font-weight:800;letter-spacing:-.02em}
+h1{font-size:clamp(2.1rem,6vw,4rem);font-weight:800;letter-spacing:-.02em}
 h2{font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:700;letter-spacing:-.01em}
 h3{font-size:1.15rem;font-weight:700}
 p{margin:0;max-width:62ch}
-.eyebrow{font:600 .75rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+img{max-width:100%;height:auto;display:block}
+.eyebrow{font:600 .75rem/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+nav{display:flex;justify-content:space-between;align-items:center;gap:.5rem 1rem;flex-wrap:wrap}
 .brand{font:800 1.2rem var(--display);letter-spacing:-.01em;color:var(--ink);text-decoration:none}
 .brand span{color:var(--accent)}
-.navlinks{display:flex;gap:1.25rem;flex-wrap:wrap;font-size:.95rem}
+.navlinks{display:flex;gap:.4rem 1.1rem;flex-wrap:wrap;font-size:.95rem}
 .navlinks a{color:var(--muted);text-decoration:none}.navlinks a:hover{color:var(--ink)}
-.btn{display:inline-block;font:600 1rem var(--body);padding:.8rem 1.3rem;border-radius:8px;text-decoration:none;border:1px solid var(--accent);transition:transform .15s}
+.btn{display:inline-block;font:600 1rem var(--body);padding:.8rem 1.3rem;border-radius:8px;text-decoration:none;border:1px solid var(--accent);transition:transform .15s;text-align:center}
 .btn:hover{transform:translateY(-1px)}
 .btn.primary{background:var(--accent);color:var(--accent-ink)}
 .btn.ghost{color:var(--accent);background:transparent}
+.btn.big{font-size:1.15rem;padding:1rem 1.5rem;border-radius:12px;box-shadow:0 14px 30px -16px var(--accent)}
+.btn.big small{display:block;font:400 .8rem var(--body);opacity:.85;margin-top:.15rem}
 .hero{display:grid;grid-template-columns:1.2fr 1fr;gap:3rem;align-items:center}
 .hero>*{min-width:0}
-.hero .copy{display:flex;flex-direction:column;gap:1.4rem}
-.lead{font-size:1.15rem;color:var(--muted)}
+.hero .copy{display:flex;flex-direction:column;gap:1.2rem}
+.lead{font-size:1.1rem;color:var(--muted)}
 .ctas{display:flex;gap:.75rem;flex-wrap:wrap}
-.alert{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.25rem;font-family:var(--mono);font-size:.9rem;box-shadow:0 20px 50px -30px rgba(15,25,50,.45);display:flex;flex-direction:column;gap:.9rem}
-.alert header{display:flex;justify-content:space-between;align-items:center;gap:.5rem;color:var(--muted);font-size:.78rem}
-.side{font:700 1.4rem var(--display);display:flex;gap:.6rem;align-items:baseline}
-.side .dir{color:var(--long)}
-.alert dl{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1.25rem;margin:0;font-variant-numeric:tabular-nums}
-.alert dt{color:var(--muted)} .alert dd{margin:0;text-align:right}
-.alert .sl{color:var(--short)} .alert .tp{color:var(--long)}
-.alert .note{border-top:1px dashed var(--line);padding-top:.8rem;color:var(--muted);font-size:.78rem}
-.tag{font:600 .7rem var(--mono);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:.2rem .55rem}
+.tg{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;font-size:.95rem;color:var(--muted)}
+.tg a{font:600 1rem var(--mono);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.35rem .6rem;text-decoration:none;overflow-wrap:anywhere}
+.musts{font-size:.85rem;color:var(--muted)}
+/* Sample call card: mimics the indicator's dark chart style. Text only, no image needed. */
+.sample{background:var(--chart);color:var(--chart-ink);border-radius:14px;padding:1.1rem;font:600 .85rem/1.3 var(--mono);display:flex;flex-direction:column;gap:.7rem;box-shadow:0 20px 50px -30px rgba(15,25,50,.6)}
+.sample header{display:flex;justify-content:space-between;gap:.5rem;color:#9aa5b8;font-size:.72rem}
+.sample .pill{display:inline-flex;flex-direction:column;align-items:center;align-self:flex-start;background:var(--buy);color:#06140d;border-radius:6px;padding:.35rem .7rem;font-size:.95rem}
+.sample .pill small{font-size:.7rem;font-weight:600}
+.sample .rows{display:flex;flex-direction:column;gap:.35rem}
+.sample .row{display:flex;justify-content:space-between;gap:.75rem;border-left:3px solid var(--c);padding:.25rem .55rem;background:color-mix(in srgb,var(--c) 14%,transparent);border-radius:4px}
+.sample .note{color:#9aa5b8;font-size:.72rem;font-weight:400;border-top:1px dashed #263044;padding-top:.6rem}
+.tag{font:600 .65rem var(--mono);letter-spacing:.08em;text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:.15rem .5rem}
 .contracts{display:grid;grid-template-columns:repeat(3,1fr);border-block:1px solid var(--line)}
-.contracts>div{padding:1.4rem 1rem;display:flex;flex-direction:column;gap:.3rem}
+.contracts>div{padding:1.2rem 1rem;display:flex;flex-direction:column;gap:.2rem}
 .contracts>div+div{border-left:1px solid var(--line)}
-.sym{font:800 1.8rem var(--display)}
-.spec{font:400 .82rem var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
-section{display:flex;flex-direction:column;gap:2rem}
+.sym{font:800 1.6rem var(--display)}
+.spec{font:600 .78rem var(--mono);color:var(--muted)}
+section{display:flex;flex-direction:column;gap:2rem;scroll-margin-top:1rem}
 .head{display:flex;flex-direction:column;gap:.75rem}
+/* Chart screenshot: if assets/chart.png is missing, onerror adds .noimg and the figure collapses to its caption box. */
+.shot{margin:0;background:var(--chart);border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.shot img{width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--chart)}
+.shot.noimg img{display:none}
+.shot .ph{display:none;padding:2rem 1rem;text-align:center;color:#9aa5b8;font:600 .85rem var(--mono)}
+.shot.noimg .ph{display:block}
+.shot figcaption{background:var(--surface);color:var(--muted);font-size:.78rem;line-height:1.5;padding:.8rem 1rem;border-top:1px solid var(--line)}
+.shot figcaption strong{color:var(--ink)}
 .features{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem 2.5rem}
 .feature{display:flex;flex-direction:column;gap:.5rem}
 .feature p{color:var(--muted)}
@@ -73,15 +110,17 @@ section{display:flex;flex-direction:column;gap:2rem}
 .steps li{counter-increment:s;display:flex;flex-direction:column;gap:.4rem;padding-top:1rem;border-top:2px solid var(--ink)}
 .steps li::before{content:"Step " counter(s);font:600 .75rem var(--mono);color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
 .steps p{color:var(--muted)}
+.install{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.5rem;display:flex;flex-direction:column;gap:.9rem}
+.install ol{margin:0;padding-left:1.3rem;display:flex;flex-direction:column;gap:.5rem;color:var(--muted)}
+.install strong{color:var(--ink)}
 .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:72rem}
 .plan{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.75rem;display:flex;flex-direction:column;gap:1.1rem}
 .plan.best{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
-.plan .price{font:800 2.6rem var(--display);font-variant-numeric:tabular-nums}
+.plan .price{font:800 2.6rem var(--display)}
 .plan .price small{font:400 1rem var(--body);color:var(--muted)}
 .plan ul{margin:0;padding-left:1.1rem;display:flex;flex-direction:column;gap:.35rem;color:var(--muted)}
-.plan .btn{text-align:center}
 .fine{font-size:.85rem;color:var(--muted)}
-/* Founding 50: launch offer. body[data-phase] picks which copy shows; the script handles the buttons. */
+/* Founding 50: body[data-phase] (set from PCS_CHECKOUT.phase) picks which copy shows; the script handles the buttons. */
 body:not([data-phase="regular"]) [data-show="regular"],body[data-phase="regular"] [data-show="founder"]{display:none}
 .btn:not([href]){opacity:.6;cursor:default;transform:none}
 .callout{display:flex;flex-direction:column;gap:.45rem;border:1px solid var(--accent);border-left-width:4px;border-radius:10px;padding:.9rem 1.1rem;background:var(--surface)}
@@ -93,180 +132,224 @@ body:not([data-phase="regular"]) [data-show="regular"],body[data-phase="regular"
 .founder .eyebrow{color:var(--accent)}
 .founder h2{font-size:clamp(1.8rem,4.5vw,2.8rem);font-weight:800}
 .founder .buy{display:flex;flex-direction:column;gap:1rem;border-left:1px dashed var(--line);padding-left:2rem}
-.founder .price{font:800 3.4rem/1 var(--display);font-variant-numeric:tabular-nums}
+.founder .price{font:800 3.4rem/1 var(--display)}
 .founder .price small{font:400 1rem var(--body);color:var(--muted)}
-.founder .anchor{font:400 .85rem var(--mono);color:var(--muted)}
+.founder .anchor{font:600 .85rem var(--mono);color:var(--muted)}
 .founder .anchor s{color:var(--ink)}
 .founder ul{margin:0;padding-left:1.1rem;display:flex;flex-direction:column;gap:.35rem;color:var(--muted)}
-.founder .btn{text-align:center}
 .soldout{font:700 1.1rem var(--display);color:var(--short);border:1px solid currentColor;border-radius:8px;padding:.8rem 1rem;text-align:center}
 .plan.off{opacity:.55;filter:grayscale(1)}
-code{font:400 .9em var(--mono);overflow-wrap:anywhere}
+code{font:600 .9em var(--mono);overflow-wrap:anywhere}
 .locked{font:600 .75rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .faq{display:flex;flex-direction:column;border-top:1px solid var(--line);max-width:48rem}
 details{border-bottom:1px solid var(--line);padding:1.1rem 0}
 summary{cursor:pointer;font:600 1.05rem var(--body);list-style:none;display:flex;justify-content:space-between;gap:1rem}
+summary::-webkit-details-marker{display:none}
 summary::after{content:"+";font-family:var(--mono);color:var(--muted)}
 details[open] summary::after{content:"−"}
 details p{margin-top:.6rem;color:var(--muted)}
 .risk{background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:14px;padding:1.75rem;display:flex;flex-direction:column;gap:.8rem}
 .risk p{max-width:none;font-size:.95rem}
 footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding-top:1.5rem}
+/* Sticky buy bar: phones only (TikTok traffic). */
+.buybar{display:none}
 @media (max-width:820px){
   .hero,.features,.steps,.plans,.founder{grid-template-columns:1fr}
+  .hero{gap:2rem}
+  .btn.big{width:100%}
   .founder{padding:1.4rem}
   .founder .buy{border-left:0;padding-left:0;border-top:1px dashed var(--line);padding-top:1.4rem}
   .contracts{grid-template-columns:1fr}
   .contracts>div+div{border-left:0;border-top:1px solid var(--line)}
-  .wrap{gap:3.5rem}
+  .wrap{gap:3.5rem;padding-bottom:6rem}
+  .plan,.risk,.install{padding:1.25rem}
+  .buybar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:10;gap:.75rem;align-items:center;justify-content:space-between;
+    padding:.6rem 16px calc(.6rem + env(safe-area-inset-bottom));background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -10px 30px -20px rgba(0,0,0,.5)}
+  .buybar span{min-width:0;overflow-wrap:anywhere;font-size:.8rem;color:var(--muted);line-height:1.3}
+  .buybar strong{display:block;color:var(--ink);font-size:.95rem}
+  .buybar .btn{padding:.7rem 1.1rem;white-space:nowrap}
 }
-@media (prefers-reduced-motion:reduce){.btn{transition:none}}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}html{scroll-behavior:auto}}
 </style>
 </head>
-<!-- Stripe TEST-mode links below (sandbox). Swap them for LIVE payment links and the live portal link before launch. -->
-<body data-phase="founder" data-subs="closed" data-founder="https://buy.stripe.com/test_5kQ3cv8ub0bh5Fibk22wU00" data-weekly="" data-monthly="" data-lifetime="https://buy.stripe.com/test_aFa7sL9yfaPVd7K9bU2wU03" data-portal="https://billing.stripe.com/p/login/test_5kQ3cv8ub0bh5Fibk22wU00">
+<body data-phase="founder">
 <div class="wrap">
 <nav>
   <a class="brand" href="#top">PropCall<span>Sheet</span></a>
-  <div class="navlinks"><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="#risk">Risk</a></div>
+  <div class="navlinks"><a href="#what">What you get</a><a href="#how">Install</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="#risk">Risk</a></div>
 </nav>
 
 <header class="hero" id="top">
   <div class="copy">
-    <span class="eyebrow">Private Telegram channel · Indicator included</span>
-    <h1>Every call, straight to your phone.</h1>
-    <p class="lead">A private Telegram channel with signal calls for Micro Nasdaq, Micro S&amp;P and Micro Bitcoin futures. Each call gives the direction, entry, stop loss and take profit levels. Members also get the PropCallSheet TradingView indicator free, so you can see the levels on your own chart too.</p>
-    <div class="callout" data-show="founder"><span class="eyebrow">Founding 50 · Opening offer</span><p><strong>Lifetime channel access for $50, once.</strong> Only the first 50 buyers get this price. After that, lifetime is $499.</p></div>
-    <div class="ctas"><a class="btn primary" href="#founding" data-show="founder">Claim a founding spot</a><a class="btn primary" href="#pricing" data-show="regular">See plans</a><a class="btn ghost" href="#how">How it works</a></div>
+    <span class="eyebrow">TradingView indicator · MNQ · MES · MBT</span>
+    <h1>PropCallSheet Ω Signals</h1>
+    <p class="lead">BUY and SELL calls on your TradingView chart for Micro Nasdaq, Micro S&amp;P and Micro Bitcoin futures, each with an entry, a stop and three targets. Plus the private Telegram signals channel.</p>
+    <div class="callout" data-show="founder"><span class="eyebrow">Founding 50 · first 50 buyers only</span><p><strong>Lifetime access for $50, once.</strong> After 50 sales the price goes to $499.</p></div>
+    <div class="ctas">
+      <a class="btn primary big" href="#founding" data-checkout="founder" data-show="founder">Get Founding 50 · $50<small>One payment · lifetime access</small></a>
+      <a class="btn primary big" href="#pricing" data-checkout="lifetime" data-show="regular">Get Lifetime · $499<small>One payment · lifetime access</small></a>
+    </div>
+    <p class="tg">After paying, send <code>/claim your@email</code> to <a href="https://t.me/PropCallSheetSignals_bot" rel="noopener">@PropCallSheetSignals_bot</a></p>
+    <p class="musts">18+ only · Not financial advice · Personal licence, no file sharing · <a href="#risk">Risk</a></p>
   </div>
-  <article class="alert" aria-label="Example call">
-    <header><span>Telegram channel · call</span><span class="tag">Example format</span></header>
-    <div class="side"><span class="dir">LONG</span><span>MNQ</span></div>
-    <dl>
-      <dt>Entry</dt><dd>21,450.25</dd>
-      <dt>Stop loss</dt><dd class="sl">21,431.75</dd>
-      <dt>Take profit 1</dt><dd class="tp">21,478.00</dd>
-      <dt>Take profit 2</dt><dd class="tp">21,505.50</dd>
-      <dt>Session</dt><dd>New York open</dd>
-      <dt>Timeframe</dt><dd>5m · 1h bias</dd>
-    </dl>
-    <div class="note">Calls post in the private channel. Prices shown are illustrative only.</div>
+  <article class="sample" aria-label="Example of a call on the chart">
+    <header><span>MNQ1! · 1H · example layout</span><span class="tag">Illustration</span></header>
+    <span class="pill">BUY<small>Q 7/10 · 9/17 agree</small></span>
+    <div class="rows">
+      <div class="row" style="--c:var(--buy)"><span>TP 3</span><span>3.0R</span></div>
+      <div class="row" style="--c:var(--buy)"><span>TP 2</span><span>2.0R</span></div>
+      <div class="row" style="--c:var(--buy)"><span>TP 1</span><span>1.0R</span></div>
+      <div class="row" style="--c:#ffffff"><span>Entry</span><span>price</span></div>
+      <div class="row" style="--c:var(--sell)"><span>Stop</span><span>-1.0R</span></div>
+    </div>
+    <div class="note">Q = the call's quality score out of 10. 9/17 = how many of the 17 built-in setups agree. Neither is a probability or a prediction. Layout only, not a real trade.</div>
   </article>
 </header>
 
 <div class="contracts" aria-label="Supported markets">
-  <div><span class="sym">MNQ</span><span>Micro E-mini Nasdaq-100</span><span class="spec">$2 per point · tick 0.25 = $0.50</span></div>
-  <div><span class="sym">MES</span><span>Micro E-mini S&amp;P 500</span><span class="spec">$5 per point · tick 0.25 = $1.25</span></div>
-  <div><span class="sym">MBT</span><span>Micro Bitcoin</span><span class="spec">0.1 BTC · tick $5 = $0.50</span></div>
+  <div><span class="sym">MNQ</span><span>Micro E-mini Nasdaq-100</span><span class="spec">CME micro</span></div>
+  <div><span class="sym">MES</span><span>Micro E-mini S&amp;P 500</span><span class="spec">CME micro</span></div>
+  <div><span class="sym">MBT</span><span>Micro Bitcoin</span><span class="spec">CME micro</span></div>
 </div>
 
-<section id="features">
-  <div class="head"><span class="eyebrow">What you get</span><h2>Calls in Telegram, levels on your chart.</h2></div>
+<section id="what">
+  <div class="head"><span class="eyebrow">What you get</span><h2>Everything on one chart.</h2></div>
+  <figure class="shot">
+    <img src="assets/chart.png" alt="PropCallSheet Ω Signals on a TradingView MNQ chart: a BUY label under a candle, a trade box with entry, stop and TP1 to TP3 tags, zones and the dashboard in the top-right corner" width="1600" height="900" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noimg')">
+    <div class="ph">Chart screenshot coming soon</div>
+    <figcaption><strong>Paper-tested: hypothetical results.</strong> Any figures visible on the chart or dashboard come from simulated trading. Hypothetical or simulated performance results have certain limitations. Unlike an actual performance record, simulated results do not represent actual trading. Also, since the trades have not been executed, the results may have under- or over-compensated for the impact, if any, of certain market factors, such as lack of liquidity. Simulated trading programs in general are also subject to the fact that they are designed with the benefit of hindsight. No representation is being made that any account will or is likely to achieve profit or losses similar to those shown.</figcaption>
+  </figure>
   <div class="features">
-    <div class="feature"><span class="k">Telegram</span><h3>Private signals channel</h3><p>Calls post to a private Telegram channel, so they reach your phone as a normal notification. Members only.</p></div>
-    <div class="feature"><span class="k">Confluence</span><h3>Several strategies, one call</h3><p>A signal prints only when multiple independent models agree, rather than relying on a single trigger.</p></div>
-    <div class="feature"><span class="k">Indicator included</span><h3>Levels drawn for you</h3><p>Members get the PropCallSheet TradingView indicator free: the bot sends it to you right after you claim. It plots entries, reversal warnings, stop loss and take profit lines on the timeframe you trade.</p></div>
-    <div class="feature"><span class="k">Context</span><h3>Session aware</h3><p>Weighs the Asia, London and New York sessions, timeframe alignment and seasonality before a call goes out.</p></div>
-    <div class="feature"><span class="k">News</span><h3>Quiet around big releases</h3><p>Holds off around scheduled high-impact events such as CPI, FOMC and payrolls, when spreads widen and moves get erratic.</p></div>
-    <div class="feature"><span class="k">Updates</span><h3>Keeps improving</h3><p>The models are reviewed and retuned on new market data, and updates reach the channel and the indicator without any action from you.</p></div>
+    <div class="feature"><span class="k">Calls</span><h3>BUY and SELL labels</h3><p>BUY prints under the candle, SELL above it. Each label has its own strength line, like <code>Q 7/10 · 9/17 agree</code>: the call's quality score and how many of the 17 built-in setups agree. Calls are decided on bar close.</p></div>
+    <div class="feature"><span class="k">Trade box</span><h3>Entry, stop, TP1 / TP2 / TP3</h3><p>Every call draws a box with entry, stop and three target tags. A dashed target path shows where the targets sit. It is an illustration, not a forecast.</p></div>
+    <div class="feature"><span class="k">Structure</span><h3>FVG, BOS / ChoCH, supply and demand</h3><p>Fair value gaps, breaks of structure, changes of character and supply/demand zones are marked. Hover any tag for a plain explanation of what it means.</p></div>
+    <div class="feature"><span class="k">Dashboard</span><h3>Top-right summary</h3><p>Bias on 1H, 4H and Daily, the current session, the next move for an open call, today's calls and paper-tested stats, labelled "Paper-tested: hypothetical results".</p></div>
+    <div class="feature"><span class="k">Daily layer</span><h3>RSI(2) and IBS paper calls</h3><p>Separate daily calls from two classic rules, tagged <code>PAPER</code> on the chart. They are shown for study and stay marked as paper calls.</p></div>
+    <div class="feature"><span class="k">News</span><h3>Skips Fed (FOMC) days</h3><p>No new calls from 24 hours before to 2 hours after a scheduled Fed (FOMC) decision. You can switch it off in settings.</p></div>
+    <div class="feature"><span class="k">Alerts</span><h3>TradingView alerts</h3><p>Set alerts for new calls, target and stop events, so you hear about a call without watching the chart.</p></div>
+    <div class="feature"><span class="k">Telegram</span><h3>Private signals channel</h3><p>Calls also post to a private members-only Telegram channel, so they reach your phone as a normal notification.</p></div>
+    <div class="feature"><span class="k">Updates</span><h3>Free updates</h3><p>Send <code>/indicator</code> to the bot any time to get the latest version of the indicator.</p></div>
   </div>
 </section>
 
 <section id="how">
-  <div class="head"><span class="eyebrow">How it works</span><h2>In the channel in a few minutes.</h2></div>
+  <div class="head"><span class="eyebrow">How it works</span><h2>Pay, claim, paste. A few minutes.</h2></div>
   <ol class="steps">
-    <li><h3>Pay on Stripe</h3><p>Claim a Founding 50 spot ($50 once) while they last, or buy Lifetime ($499 once). Checkout is on Stripe. Use an email you can reach.</p></li>
-    <li><h3>Claim your invite</h3><p>Open <a href="https://t.me/PropCallSheetSignals_bot" rel="noopener">@PropCallSheetSignals_bot</a> on Telegram and send <code>/claim</code> followed by your checkout email, for example <code>/claim you@example.com</code>. The bot replies with a one-time invite link.</p></li>
-    <li><h3>Get your indicator</h3><p>The bot sends you the PropCallSheet indicator file with simple steps to add it to TradingView. Use it on MNQ, MES or MBT.</p></li>
+    <li><h3>Pay on Stripe</h3><p>Founding 50 ($50 once, first 50 buyers) or Lifetime ($499 once). Use an email you can reach: Stripe emails your receipt there.</p></li>
+    <li><h3>Claim in Telegram</h3><p>Open <a href="https://t.me/PropCallSheetSignals_bot" rel="noopener">@PropCallSheetSignals_bot</a> and send <code>/claim</code> with your checkout email, for example <code>/claim you@example.com</code>.</p></li>
+    <li><h3>Get the indicator</h3><p>The bot checks your payment and sends the indicator file, the install steps and your one-time invite link to the private channel.</p></li>
   </ol>
+  <div class="install" id="install">
+    <h3>How to install on TradingView</h3>
+    <ol>
+      <li>Open the indicator file the bot sent and <strong>copy all of it</strong>.</li>
+      <li>Go to <strong>tradingview.com</strong> on a computer or phone browser (the Pine Editor is not in the TradingView phone app) and open a chart.</li>
+      <li>Open the <strong>Pine Editor</strong> at the bottom of the chart.</li>
+      <li>Select everything in the editor (<strong>Ctrl+A</strong>, or Cmd+A on Mac) and <strong>paste</strong> (Ctrl+V).</li>
+      <li>Click <strong>Save</strong>, then <strong>Add to chart</strong>.</li>
+      <li>Pick <strong>MNQ, MES or MBT</strong>. Calls are tuned for the 1H chart, which matches the Telegram channel.</li>
+      <li>For alerts: <strong>Create alert</strong>, choose <strong>PCS Ω</strong> as the condition, pick the call or event you want.</li>
+    </ol>
+    <p class="fine">Works on any TradingView account, free or paid. New version? Send <code>/indicator</code> to the bot and repeat steps 1 to 5.</p>
+  </div>
 </section>
 
 <section id="pricing">
-  <div class="head"><span class="eyebrow">Pricing</span><h2>Private channel access.</h2><p class="fine">Every plan unlocks the private Telegram signals channel, and the PropCallSheet TradingView indicator comes free with it.</p></div>
+  <div class="head"><span class="eyebrow">Pricing</span><h2>Pay once. Keep it.</h2><p class="fine">Every plan includes the PropCallSheet Ω Signals indicator, its updates and the private Telegram signals channel.</p></div>
   <article class="founder" id="founding" aria-labelledby="founding-h">
     <div class="copy">
-      <span class="eyebrow">Founding 50 · Opening invitation</span>
+      <span class="eyebrow">Founding 50 · Opening offer</span>
       <h2 id="founding-h">Be one of the first 50.</h2>
-      <p>We are opening the PropCallSheet channel with 50 founding spots. Founders pay $50 once and keep access to the private Telegram channel for as long as PropCallSheet operates it. That is a tenth of the regular $499 lifetime price.</p>
+      <p>Founders pay $50 once and keep the indicator, its updates and the private channel for as long as PropCallSheet operates them. That is a tenth of the regular $499 lifetime price.</p>
       <p class="fine">Only 50 spots, never reopened. Checkout closes itself after the 50th sale.</p>
     </div>
     <div class="buy">
       <div class="price">$50<small> once</small></div>
       <span class="anchor">Regular lifetime: <s>$499</s></span>
-      <ul><li>Lifetime private channel access</li><li>Calls for MNQ, MES and MBT</li><li>No renewals</li><li>Priority support</li></ul>
-      <a class="btn primary" href="#founding" data-checkout="founder" data-show="founder">Claim a founding spot</a>
-      <div class="soldout" data-show="regular">SOLD OUT — all 50 founding spots claimed</div>
+      <ul><li>PropCallSheet Ω Signals indicator</li><li>Free updates via /indicator</li><li>Private Telegram channel</li><li>MNQ, MES and MBT</li><li>No renewals</li></ul>
+      <a class="btn primary big" href="#founding" data-checkout="founder" data-show="founder">Claim a founding spot</a>
+      <div class="soldout" data-show="regular">SOLD OUT · all 50 founding spots claimed</div>
     </div>
   </article>
   <p class="locked" data-subs-note>Lifetime is open now · Weekly and monthly coming soon</p>
   <div class="plans">
-    <div class="plan">
-      <h3>Weekly</h3>
-      <div class="price">$14.99<small> / week</small></div>
-      <p class="fine">Try the channel for a week.</p>
-      <ul><li>Private Telegram channel access</li><li>Calls for MNQ, MES and MBT</li><li>Cancel any time</li></ul>
-      <a class="btn ghost" href="#pricing" data-checkout="weekly">Start weekly</a>
-    </div>
-    <div class="plan">
-      <h3>Monthly</h3>
-      <div class="price">$49.99<small> / month</small></div>
-      <p class="fine">Save about 20% vs weekly.</p>
-      <ul><li>Everything in Weekly</li><li>Lower cost per week</li><li>Cancel any time</li></ul>
-      <a class="btn ghost" href="#pricing" data-checkout="monthly">Start monthly</a>
-    </div>
     <div class="plan best">
       <h3>Lifetime</h3>
       <div class="price">$499<small> once</small></div>
       <p class="fine">Pay once, no renewals.</p>
-      <ul><li>Private channel access for as long as PropCallSheet operates it</li><li>Calls for MNQ, MES and MBT</li><li>No renewals</li><li>Priority support</li></ul>
+      <ul><li>Indicator + free updates</li><li>Private Telegram channel</li><li>MNQ, MES and MBT</li><li>Priority support</li></ul>
       <a class="btn primary" href="#pricing" data-checkout="lifetime">Buy lifetime</a>
     </div>
+    <div class="plan">
+      <h3>Monthly</h3>
+      <div class="price">$49.99<small> / month</small></div>
+      <p class="fine">Not on sale yet.</p>
+      <ul><li>Indicator + updates</li><li>Private Telegram channel</li><li>Cancel any time</li></ul>
+      <a class="btn ghost" href="#pricing" data-checkout="monthly">Start monthly</a>
+    </div>
+    <div class="plan">
+      <h3>Weekly</h3>
+      <div class="price">$14.99<small> / week</small></div>
+      <p class="fine">Not on sale yet.</p>
+      <ul><li>Indicator + updates</li><li>Private Telegram channel</li><li>Cancel any time</li></ul>
+      <a class="btn ghost" href="#pricing" data-checkout="weekly">Start weekly</a>
+    </div>
   </div>
-  <p class="fine" id="checkout-note">Checkout is on Stripe. Founding 50 ($50, first 50 purchases only) and Lifetime ($499) are single payments for access to the private Telegram channel for as long as PropCallSheet operates it. After paying, open @PropCallSheetSignals_bot on Telegram and send /claim with your checkout email to get your invite link. Weekly and monthly plans are not on sale yet. The PropCallSheet TradingView indicator is included free for members. We don't sell, fund or evaluate prop firm accounts.</p>
+  <p class="fine" id="checkout-note">Checkout is on Stripe. Founding 50 ($50, first 50 purchases only) and Lifetime ($499) are single payments. After paying, send <code>/claim</code> with your checkout email to <a href="https://t.me/PropCallSheetSignals_bot" rel="noopener">@PropCallSheetSignals_bot</a> on Telegram. You must be 18 or older. Your licence is personal: sharing the indicator file or your invite link ends access without a refund (<a href="legal.html#terms">Terms</a>, <a href="legal.html#refunds">Refunds</a>). Not financial advice. We don't sell, fund or evaluate prop firm accounts.</p>
 </section>
 
 <section id="faq">
   <div class="head"><span class="eyebrow">FAQ</span><h2>Questions</h2></div>
   <div class="faq">
-    <details><summary>What do I get when I pay?</summary><p>Access to the private PropCallSheet Telegram channel, where signal calls for MNQ, MES and MBT are posted with entry, stop loss and take profit levels, plus the PropCallSheet TradingView indicator free.</p></details>
-    <details><summary>How do I get the indicator?</summary><p>It comes free with your purchase. After you send /claim, @PropCallSheetSignals_bot sends you the indicator file with simple steps to add it to TradingView. It works on any TradingView account, including free ones. Send /indicator to the bot any time for the latest version.</p></details>
-    <details><summary>What is the Founding 50?</summary><p>Our launch offer. The first 50 buyers pay $50 once for access to the private channel for as long as PropCallSheet operates it, on the same terms as the $499 lifetime plan. Checkout stops after the 50th sale and the offer does not come back.</p></details>
-    <details><summary>How do I get into the channel after paying?</summary><p>Open <a href="https://t.me/PropCallSheetSignals_bot" rel="noopener">@PropCallSheetSignals_bot</a> on Telegram and send <code>/claim</code> followed by the email you used at checkout. The bot checks your payment and replies with a one-time invite link. The link works once, so don't share it.</p></details>
-    <details><summary>Do I need Telegram or a paid TradingView plan?</summary><p>You need the free Telegram app to join the channel. The indicator works on any TradingView account, free or paid; paid TradingView plans only add more indicators per chart and more alerts.</p></details>
+    <details><summary>What do I get when I pay?</summary><p>The PropCallSheet Ω Signals TradingView indicator (file plus install steps, sent by the bot), free updates through <code>/indicator</code>, and access to the private Telegram signals channel.</p></details>
+    <details><summary>How do I get it after paying?</summary><p>Open <a href="https://t.me/PropCallSheetSignals_bot" rel="noopener">@PropCallSheetSignals_bot</a> on Telegram and send <code>/claim</code> followed by the email you used at checkout. The bot checks your payment, then sends the indicator file, install steps and a one-time invite link to the channel. The invite link works once, so don't share it.</p></details>
+    <details><summary>Can I use it on my phone?</summary><p>Installing needs the Pine Editor on tradingview.com (a computer, or a phone browser in desktop mode). Telegram calls work on any phone.</p></details>
+    <details><summary>What does "Q 7/10 · 9/17 agree" mean?</summary><p>Q is the call's quality score out of 10 (it blends how many setups agree, higher-timeframe trend, market type, session and stretch). 9/17 is how many of the 17 built-in setups vote with the call. Neither is a probability or a promise about the trade.</p></details>
+    <details><summary>Does it repaint?</summary><p>Calls are decided when the bar closes, so a printed call does not move or disappear afterwards.</p></details>
+    <details><summary>What is the Founding 50?</summary><p>Our launch offer. The first 50 buyers pay $50 once, on the same terms as the $499 lifetime plan. Checkout stops after the 50th sale and the offer does not come back.</p></details>
+    <details><summary>Do I need a paid TradingView plan?</summary><p>No. The indicator works on any TradingView account, free or paid. Paid plans only add more indicators per chart and more alerts. Telegram is free.</p></details>
     <details><summary>Which markets are covered?</summary><p>Micro E-mini Nasdaq-100 (MNQ), Micro E-mini S&amp;P 500 (MES) and CME Micro Bitcoin (MBT). The indicator also plots on the full-size contracts, since price action is the same.</p></details>
-    <details><summary>Does it place trades for me?</summary><p>No. The channel and the indicator are analysis tools. You decide whether to take a trade, and you place and manage orders with your own broker.</p></details>
-    <details><summary>Can I use it for prop firm evaluations?</summary><p>Many prop firms allow third-party signals and indicators, but rules differ. Check your firm's terms on signal services and copy trading before using it on a funded or evaluation account. We don't sell, fund or evaluate prop firm accounts.</p></details>
-    <details><summary>How do I cancel?</summary><p>Founding 50 and Lifetime are single payments, so there is nothing to cancel. Weekly and monthly plans are coming soon; once they open, you can cancel from the <a href="#" data-portal-link>manage subscription</a> page by signing in with your checkout email.</p></details>
+    <details><summary>Does it place trades for me?</summary><p>No. The indicator and the channel are analysis tools. You decide whether to take a trade, and you place and manage orders with your own broker.</p></details>
+    <details><summary>Can I use it for prop firm evaluations?</summary><p>Many prop firms allow third-party signals and indicators, but rules differ. Check your firm's terms before using it on a funded or evaluation account. We don't sell, fund or evaluate prop firm accounts.</p></details>
+    <details><summary>How do I cancel?</summary><p>Founding 50 and Lifetime are single payments, so there is nothing to cancel. Once weekly and monthly plans open, you can cancel from the <a href="#" data-portal-link>manage subscription</a> page with your checkout email.</p></details>
     <details><summary>I paid but have no access</summary><p>Make sure you sent <code>/claim</code> with the exact email you used at checkout. If the bot still can't find your payment, or your invite link stopped working, email <a href="mailto:swainwebstudio@gmail.com">swainwebstudio@gmail.com</a> from your checkout email.</p></details>
-    <details><summary>What is your win rate?</summary><p>We do not publish performance figures. Past results, real or simulated, do not predict future results, and any number we quoted could mislead you. Judge the signals on your own chart before risking money.</p></details>
+    <details><summary>What is your win rate?</summary><p>We don't sell on performance figures. Any stat on the indicator's dashboard is paper-tested: hypothetical results, and past results, real or simulated, do not predict future results. Judge the calls on your own chart before risking money.</p></details>
   </div>
 </section>
 
 <section id="risk" class="risk" aria-labelledby="risk-h">
   <h2 id="risk-h">Risk disclosure</h2>
-  <p>Trading futures and cryptocurrency involves substantial risk of loss and is not suitable for every investor. Leverage means you can lose more than your initial deposit. Only trade with money you can afford to lose.</p>
-  <p>PropCallSheet provides educational and informational tools only. Nothing on this site or in the indicator is financial, investment or trading advice, or a recommendation to buy or sell any instrument. We are not a registered investment adviser, broker or commodity trading advisor.</p>
-  <p>Signals can be wrong, late, or missed because of data, platform or connection issues. Any win rate, backtest or paper result we show is based on simulated or hypothetical performance results that have certain inherent limitations. Unlike the results shown in an actual performance record, these results do not represent actual trading. Also, because these trades have not actually been executed, these results may have under- or over-compensated for the impact, if any, of certain market factors, such as lack of liquidity. Simulated or hypothetical trading programs in general are also subject to the fact that they are designed with the benefit of hindsight. No representation is being made that any account will or is likely to achieve profits or losses similar to these being shown. You are solely responsible for your own trading decisions and results.</p>
+  <p>Trading futures and cryptocurrency involves substantial risk of loss and is not suitable for every investor. Leverage means you can lose more than your initial deposit. Only trade with money you can afford to lose. You must be 18 or older to buy or use PropCallSheet.</p>
+  <p>PropCallSheet provides educational and informational tools only. Nothing on this site, in the channel or in the indicator is financial, investment or trading advice, or a recommendation to buy or sell any instrument. We are not a registered investment adviser, broker or commodity trading advisor.</p>
+  <p>Paper-tested: hypothetical results. Signals can be wrong, late, or missed because of data, platform or connection issues. Any win rate, backtest or paper result shown, including on the indicator's dashboard, is based on simulated or hypothetical performance results that have certain inherent limitations. Unlike the results shown in an actual performance record, these results do not represent actual trading. Also, because these trades have not actually been executed, these results may have under- or over-compensated for the impact, if any, of certain market factors, such as lack of liquidity. Simulated or hypothetical trading programs in general are also subject to the fact that they are designed with the benefit of hindsight. No representation is being made that any account will or is likely to achieve profits or losses similar to these being shown. You are solely responsible for your own trading decisions and results.</p>
 </section>
 
 <footer><span>© 2026 PropCallSheet · <a href="legal.html#terms">Terms</a> · <a href="legal.html#privacy">Privacy</a> · <a href="legal.html#refunds">Refunds</a> · <a href="legal.html#contact">Contact</a></span><span>TradingView is a trademark of TradingView, Inc. CME micro contracts are products of CME Group. Telegram is a trademark of Telegram FZ-LLC. Not affiliated with any of them.</span></footer>
 </div>
+
+<div class="buybar" aria-label="Buy">
+  <span data-show="founder"><strong>Founding 50 · $50 once</strong>Then /claim in @PropCallSheetSignals_bot</span>
+  <span data-show="regular"><strong>Lifetime · $499 once</strong>Then /claim in @PropCallSheetSignals_bot</span>
+  <a class="btn primary" href="#founding" data-checkout="founder" data-show="founder">Buy now</a>
+  <a class="btn primary" href="#pricing" data-checkout="lifetime" data-show="regular">Buy now</a>
+</div>
+
 <script>
-// One place to switch checkout on: put the Stripe payment links on <body> (data-founder, data-weekly, data-monthly,
-// data-lifetime) and the customer portal login link (data-portal).
-// data-phase="founder": Founding 50 + Lifetime sell. data-phase="regular" (after sellout): founder shows SOLD OUT, Lifetime sells.
-// Weekly/monthly stay "Coming soon" unless body has data-subs="open" AND their link is non-empty.
-(function(){var d=document.body.dataset,regular=d.phase==='regular',anySub=false;
+// Wires every [data-checkout] button to the links in window.PCS_CHECKOUT (in <head>). Edit links there, not here.
+// phase "founder": Founding 50 + Lifetime sell. phase "regular" (after sellout): founder shows SOLD OUT, Lifetime sells.
+// Weekly/monthly stay "Coming soon" unless subsOpen is true AND their link is non-empty.
+(function(){var c=window.PCS_CHECKOUT||{},regular=c.phase==='regular',anySub=false;
+  document.body.dataset.phase=regular?'regular':'founder';
   function off(a,text){a.removeAttribute('href');a.setAttribute('aria-disabled','true');a.textContent=text;
     var p=a.closest('.plan');if(p)p.classList.add('off')}
   document.querySelectorAll('[data-checkout]').forEach(function(a){
-    var plan=a.dataset.checkout,url=d[plan]||'';
+    var plan=a.dataset.checkout,url=c[plan]||'';
     if(plan==='founder'){if(regular)return off(a,'Sold out')}
-    else if(plan==='weekly'||plan==='monthly'){if(d.subs!=='open'||!url)return off(a,'Coming soon');anySub=true}
+    else if(plan==='weekly'||plan==='monthly'){if(!c.subsOpen||!url)return off(a,'Coming soon');anySub=true}
     if(url){a.href=url;a.rel='noopener'}else off(a,'Opening soon')});
   document.querySelectorAll('[data-subs-note]').forEach(function(n){if(anySub)n.hidden=true});
   document.querySelectorAll('[data-portal-link]').forEach(function(a){
-    if(d.portal){a.href=d.portal;a.rel='noopener'}else{a.removeAttribute('href')}});})();
+    if(c.portal){a.href=c.portal;a.rel='noopener'}else{a.removeAttribute('href')}});})();
 </script>
 </body>
 </html>
