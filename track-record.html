@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PropCallSheet Track Record</title>
+<meta name="description" content="Every PropCallSheet call for MNQ, MES and MBT, wins and losses, with entry, stop, targets and result in R. Paper-tested, hypothetical results. Not financial advice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;600&family=JetBrains+Mono:wght@600&display=swap">
+<style>
+/* Layout: one reading column. Disclaimer first, then per-market summary tiles, market filter, and a table of every call (cards on phones).
+   Data comes from data/calls.json (written by the bot). Results are shown in neutral ink: no green for wins, no red for losses. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --ink:#111827; --muted:#566074; --line:#d9dee7;
+  --accent:#1f5eff; --accent-ink:#ffffff; --long:#0f8a5f; --short:#c2410c; --warn-bg:#fff6e5; --warn-line:#e7b45a;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0c111b; --surface:#141b28; --ink:#e8ecf3; --muted:#9aa5b8; --line:#263044;
+  --accent:#6f9bff; --accent-ink:#0c111b; --long:#3fcf95; --short:#ff8a5c; --warn-bg:#231c0e; --warn-line:#8a6a2c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c111b; --surface:#141b28; --ink:#e8ecf3; --muted:#9aa5b8; --line:#263044;
+  --accent:#6f9bff; --accent-ink:#0c111b; --long:#3fcf95; --short:#ff8a5c; --warn-bg:#231c0e; --warn-line:#8a6a2c; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.6 var(--body);padding-inline:16px;overflow-x:hidden}
+.wrap{max-width:68rem;margin-inline:auto;display:flex;flex-direction:column;gap:3rem;padding-block:1.25rem 4rem}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(2.1rem,6vw,3.4rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.4rem,3vw,1.9rem);font-weight:700;letter-spacing:-.01em}
+p{margin:0;max-width:62ch}
+.eyebrow{font:600 .75rem/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+nav{display:flex;justify-content:space-between;align-items:center;gap:.5rem 1rem;flex-wrap:wrap}
+.brand{font:800 1.2rem var(--display);letter-spacing:-.01em;color:var(--ink);text-decoration:none}
+.brand span{color:var(--accent)}
+.navlinks{display:flex;gap:.4rem 1.1rem;flex-wrap:wrap;font-size:.95rem}
+.navlinks a{color:var(--muted);text-decoration:none}.navlinks a:hover,.navlinks a[aria-current]{color:var(--ink)}
+.head{display:flex;flex-direction:column;gap:.75rem}
+.lead{font-size:1.05rem;color:var(--muted)}
+.fine{font-size:.85rem;color:var(--muted)}
+code{font:600 .9em var(--mono);overflow-wrap:anywhere}
+.risk{background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:14px;padding:1.25rem 1.4rem;display:flex;flex-direction:column;gap:.6rem}
+.risk strong{font:700 1.15rem/1.3 var(--display)}
+.risk p{max-width:none;font-size:.95rem}
+section{display:flex;flex-direction:column;gap:1.25rem}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.2rem;display:flex;flex-direction:column;gap:.7rem;min-width:0}
+.tile.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.tile header{display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap}
+.sym{font:800 1.5rem var(--display)}
+.tag{font:600 .65rem var(--mono);letter-spacing:.08em;text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:.15rem .5rem;color:var(--muted);white-space:nowrap}
+.tag.live{color:var(--accent)}
+.tile dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:.6rem .8rem}
+.tile dt{font:600 .68rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tile dd{margin:0;font:800 1.35rem/1.1 var(--display);font-variant-numeric:tabular-nums}
+.tile .split{font:600 .75rem var(--mono);color:var(--muted);border-top:1px solid var(--line);padding-top:.6rem}
+.filters{display:flex;gap:.5rem;flex-wrap:wrap}
+.filters button{font:600 .9rem var(--body);padding:.5rem 1rem;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;min-height:44px}
+.filters button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.state{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:1.5rem;text-align:center;color:var(--muted)}
+.state p{margin-inline:auto}
+.tablebox{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{text-align:left;padding:.65rem .75rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 .68rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+td.num{font:600 .85rem var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.r{font-weight:800}
+tr.open td{background:color-mix(in srgb,var(--accent) 6%,transparent)}
+.dir{font:600 .8rem var(--mono)}
+.sub{display:block;font-size:.75rem;color:var(--muted)}
+footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding-top:1.5rem}
+@media (max-width:900px){.tiles{grid-template-columns:repeat(2,1fr)}}
+/* Phones: each call becomes a card; labels come from data-label. */
+@media (max-width:700px){
+  .tiles{grid-template-columns:1fr 1fr;gap:.75rem}
+  .tile{padding:.9rem}
+  .tile dd{font-size:1.15rem}
+  .tablebox{background:transparent;border:0;border-radius:0}
+  table,tbody,tr,td{display:block}
+  thead{display:none}
+  tr{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:.75rem;padding:.4rem .2rem;display:grid;grid-template-columns:1fr 1fr}
+  tr.open{border-color:var(--accent)}
+  tr.open td{background:transparent}
+  td{border:0;padding:.35rem .75rem;min-width:0}
+  td::before{content:attr(data-label);display:block;font:600 .62rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  td.wide{grid-column:1/-1}
+  td.num{white-space:normal;overflow-wrap:anywhere}
+}
+@media (max-width:360px){.tiles{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a class="brand" href="index.html">PropCall<span>Sheet</span></a>
+  <div class="navlinks"><a href="index.html#what">What you get</a><a href="index.html#pricing">Pricing</a><a href="track-record.html" aria-current="page">Track record</a><a href="index.html#faq">FAQ</a><a href="index.html#risk">Risk</a></div>
+</nav>
+
+<header class="head">
+  <span class="eyebrow">Track record · MNQ · MES · MBT</span>
+  <h1>Every call, wins and losses.</h1>
+  <p class="lead">Each call the signals post is logged here as it happens, with its entry, stop, three targets and how it ended. Nothing is removed afterwards.</p>
+</header>
+
+<div class="risk" role="note" aria-label="Disclaimer">
+  <strong>Paper-tested, hypothetical results. Not financial advice.</strong>
+  <p id="disc-static">Every call is listed, wins AND losses; R is before fees. These calls were not executed in a real account, so they do not include fees, commissions, slippage or missed fills. Past results, real or simulated, do not predict future results. <a href="legal.html#disclaimer">Full disclaimer</a>.</p>
+  <p id="disc-data" hidden></p>
+</div>
+
+<section aria-labelledby="sum-h">
+  <div class="head"><h2 id="sum-h">Summary</h2><p class="fine" id="updated">Loading…</p></div>
+  <div class="tiles" id="tiles"></div>
+  <p class="fine">Win rate = winning calls ÷ closed calls (scratches count as not won). Profit factor = total R won ÷ total R lost. R = the call's risk (entry to stop); +1R means it made one times what it risked. MBT is experimental and tracked separately.</p>
+</section>
+
+<section aria-labelledby="calls-h">
+  <div class="head"><h2 id="calls-h">All calls</h2><p class="fine">Newest first. Times are UTC. Open calls are marked <span class="tag live">Live</span> until they close.</p></div>
+  <div class="filters" role="group" aria-label="Filter by market" id="filters">
+    <button type="button" data-m="ALL" aria-pressed="true">All</button>
+    <button type="button" data-m="MNQ" aria-pressed="false">MNQ</button>
+    <button type="button" data-m="MES" aria-pressed="false">MES</button>
+    <button type="button" data-m="MBT" aria-pressed="false">MBT</button>
+  </div>
+  <div class="state" id="state" aria-live="polite"><p>Loading the track record…</p></div>
+  <div class="tablebox" id="tablebox" hidden>
+    <table>
+      <thead><tr><th>Opened</th><th>Market</th><th>Side</th><th>Entry</th><th>Stop</th><th>TP1 / TP2 / TP3</th><th>Status</th><th>Exit</th><th>Result</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</section>
+
+<footer><span>© 2026 PropCallSheet · <a href="index.html">Home</a> · <a href="track-record.html">Track record</a> · <a href="legal.html#terms">Terms</a> · <a href="legal.html#privacy">Privacy</a> · <a href="legal.html#refunds">Refunds</a> · <a href="legal.html#disclaimer">Disclaimer</a> · <a href="legal.html#contact">Contact</a></span><span>TradingView is a trademark of TradingView, Inc. CME micro contracts are products of CME Group. Not affiliated with either.</span></footer>
+</div>
+
+<script>
+// Reads data/calls.json (relative path, same site). Builds every node with textContent, never innerHTML, so data can't inject markup.
+(function(){
+  var MARKETS=['ALL','MNQ','MES','MBT'], data=null, market='ALL';
+  var $=function(id){return document.getElementById(id)};
+  function el(tag,cls,text){var n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n}
+  function isNum(v){return typeof v==='number'&&isFinite(v)}
+  function parseUtc(s){if(!s)return NaN;s=String(s).trim().replace(' ','T');if(!/[zZ]|[+-]\d\d:?\d\d$/.test(s))s+='Z';return Date.parse(s)}
+  function shortUtc(s){return s?String(s).replace('T',' ').replace(/(:\d\d)(\.\d+)?(Z|\+00:?00)?$/,'$1').slice(0,16):'—'}
+  function price(v){return isNum(v)?String(v):'—'}
+  function pct(v){if(!isNum(v))return '—';var p=v<=1?v*100:v;return (Math.round(p*10)/10)+'%'}
+  function pf(v){return isNum(v)?v.toFixed(2):'—'}
+  function r(v){if(!isNum(v))return '—';var s=(Math.round(v*100)/100).toFixed(2);return (v>0?'+':'')+s+'R'}
+  function int(v){return isNum(v)?String(v):'0'}
+  function words(s){return s?String(s).replace(/_/g,' '):''}
+  function showState(msg){var st=$('state');st.textContent='';st.appendChild(el('p',null,msg));st.hidden=false;$('tablebox').hidden=true}
+
+  function tiles(){
+    var box=$('tiles'),sum=(data&&data.summary)||{};box.textContent='';
+    MARKETS.forEach(function(m){
+      var s=sum[m]||{},t=el('article','tile'+(m===market?' on':''));
+      var h=el('header');h.appendChild(el('span','sym',m==='ALL'?'All':m));
+      if(m==='MBT')h.appendChild(el('span','tag','Experimental'));
+      t.appendChild(h);
+      var dl=el('dl');
+      [['Calls',int(s.calls)],['Win rate',pct(s.win_rate)],['Profit factor',pf(s.profit_factor)],['Total R',r(s.total_r)]].forEach(function(p){
+        var d=el('div');d.appendChild(el('dt',null,p[0]));d.appendChild(el('dd',null,p[1]));dl.appendChild(d)});
+      t.appendChild(dl);
+      t.appendChild(el('div','split','W '+int(s.wins)+' · S '+int(s.scratches)+' · L '+int(s.losses)+' · '+int(s.open)+' open'));
+      box.appendChild(t)});
+  }
+
+  function td(label,text,cls){var c=el('td',cls,text);c.setAttribute('data-label',label);return c}
+
+  function table(){
+    tiles();
+    document.querySelectorAll('#filters button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.m===market?'true':'false')});
+    var all=Array.isArray(data.calls)?data.calls.slice():[];
+    if(!all.length){showState('Tracking started '+shortUtc(data.start_utc)+' UTC; first calls appear here as they happen.');return}
+    var list=all.filter(function(c){return market==='ALL'||c.market===market});
+    if(!list.length){showState('No '+market+' calls yet since tracking started '+shortUtc(data.start_utc)+' UTC.');return}
+    list.sort(function(a,b){var x=parseUtc(a.opened_utc),y=parseUtc(b.opened_utc);
+      if(isNaN(x)||isNaN(y))return String(b.opened_utc).localeCompare(String(a.opened_utc));return y-x});
+    var body=$('rows');body.textContent='';
+    list.forEach(function(c){
+      var open=c.status==='open',tr=el('tr',open?'open':null);
+      tr.appendChild(td('Opened (UTC)',shortUtc(c.opened_utc),'num'));
+      var mk=td('Market',(c.market||'—')+(c.tf?' · '+c.tf:''));
+      if(c.experimental){mk.appendChild(document.createTextNode(' '));mk.appendChild(el('span','tag','Experimental'))}
+      tr.appendChild(mk);
+      tr.appendChild(td('Side',c.dir||'—','dir'));
+      tr.appendChild(td('Entry',price(c.entry),'num'));
+      tr.appendChild(td('Stop',price(c.stop),'num'));
+      tr.appendChild(td('TP1 / TP2 / TP3',[c.tp1,c.tp2,c.tp3].map(price).join(' / '),'num wide'));
+      var st=td('Status',null);
+      if(open)st.appendChild(el('span','tag live','Live'));else st.textContent='Closed';
+      tr.appendChild(st);
+      var ex=td('Exit',open?'—':(words(c.exit_reason)||'—'));
+      if(!open&&c.closed_utc)ex.appendChild(el('span','sub',shortUtc(c.closed_utc)+' UTC'));
+      tr.appendChild(ex);
+      tr.appendChild(td('Result',open?'open':r(c.result_r),'num r'));
+      body.appendChild(tr)});
+    $('state').hidden=true;$('tablebox').hidden=false;
+  }
+
+  $('filters').addEventListener('click',function(e){var b=e.target.closest('button');if(!b||!data)return;market=b.dataset.m;table()});
+
+  fetch('data/calls.json',{cache:'no-store'}).then(function(res){if(!res.ok)throw new Error('HTTP '+res.status);return res.json()})
+    .then(function(j){
+      if(!j||typeof j!=='object')throw new Error('bad data');
+      data=j;
+      $('updated').textContent=(j.generated_utc?'Updated '+shortUtc(j.generated_utc)+' UTC. ':'')+'Tracking since '+shortUtc(j.start_utc)+' UTC.';
+      // Show the bot's own disclaimer too, unless it only repeats the fixed text above.
+      var d=j.disclaimer?String(j.disclaimer).trim():'',seen=(document.querySelector('.risk').textContent||'').toLowerCase();
+      var extra=d.split(/(?<=\.)\s+/).filter(function(x){return seen.indexOf(x.toLowerCase().replace(/\.$/,''))<0}).join(' ');
+      if(extra){$('disc-data').textContent=extra;$('disc-data').hidden=false}
+      table()})
+    .catch(function(){
+      $('updated').textContent='Could not load the summary.';
+      showState('The track record could not be loaded right now. Please refresh in a minute.')});
+})();
+</script>
+</body>
+</html>

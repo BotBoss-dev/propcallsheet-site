@@ -1,0 +1,52 @@
+{
+  "generated_utc": "2026-10-16 00:00",
+  "start_utc": "2026-10-16 00:00",
+  "disclaimer": "Paper-tested, hypothetical results. Not financial advice. Every call is listed, wins AND losses; R is before fees.",
+  "summary": {
+    "ALL": {
+      "calls": 0,
+      "open": 0,
+      "wins": 0,
+      "scratches": 0,
+      "losses": 0,
+      "win_rate": null,
+      "profit_factor": null,
+      "total_r": 0,
+      "avg_r": null
+    },
+    "MNQ": {
+      "calls": 0,
+      "open": 0,
+      "wins": 0,
+      "scratches": 0,
+      "losses": 0,
+      "win_rate": null,
+      "profit_factor": null,
+      "total_r": 0,
+      "avg_r": null
+    },
+    "MES": {
+      "calls": 0,
+      "open": 0,
+      "wins": 0,
+      "scratches": 0,
+      "losses": 0,
+      "win_rate": null,
+      "profit_factor": null,
+      "total_r": 0,
+      "avg_r": null
+    },
+    "MBT": {
+      "calls": 0,
+      "open": 0,
+      "wins": 0,
+      "scratches": 0,
+      "losses": 0,
+      "win_rate": null,
+      "profit_factor": null,
+      "total_r": 0,
+      "avg_r": null
+    }
+  },
+  "calls": []
+}

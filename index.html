@@ -137,6 +137,8 @@ body:not([data-phase="regular"]) [data-show="regular"],body[data-phase="regular"
 .founder .anchor{font:600 .85rem var(--mono);color:var(--muted)}
 .founder .anchor s{color:var(--ink)}
 .founder ul{margin:0;padding-left:1.1rem;display:flex;flex-direction:column;gap:.35rem;color:var(--muted)}
+.spots{font:600 .85rem var(--mono);color:var(--ink)}
+.spots[hidden]{display:none}
 .soldout{font:700 1.1rem var(--display);color:var(--short);border:1px solid currentColor;border-radius:8px;padding:.8rem 1rem;text-align:center}
 .plan.off{opacity:.55;filter:grayscale(1)}
 code{font:600 .9em var(--mono);overflow-wrap:anywhere}
@@ -176,7 +178,7 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
 <div class="wrap">
 <nav>
   <a class="brand" href="#top">PropCall<span>Sheet</span></a>
-  <div class="navlinks"><a href="#what">What you get</a><a href="#how">Install</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="#risk">Risk</a></div>
+  <div class="navlinks"><a href="#what">What you get</a><a href="#how">Install</a><a href="#pricing">Pricing</a><a href="track-record.html">Track record</a><a href="#faq">FAQ</a><a href="#risk">Risk</a></div>
 </nav>
 
 <header class="hero" id="top">
@@ -189,6 +191,7 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
       <a class="btn primary big" href="#founding" data-checkout="founder" data-show="founder">Get Founding 50 · $50<small>One payment · lifetime access</small></a>
       <a class="btn primary big" href="#pricing" data-checkout="lifetime" data-show="regular">Get Lifetime · $499<small>One payment · lifetime access</small></a>
     </div>
+    <p class="spots" data-spots data-show="founder" hidden></p>
     <p class="tg">After paying, send <code>/claim your@email</code> to <a href="https://t.me/PropCallSheetSignals_bot" rel="noopener">@PropCallSheetSignals_bot</a></p>
     <p class="musts">18+ only · Not financial advice · Personal licence, no file sharing · <a href="#risk">Risk</a></p>
   </div>
@@ -268,6 +271,7 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
       <span class="anchor">Regular lifetime: <s>$499</s></span>
       <ul><li>PropCallSheet Ω Signals indicator</li><li>Free updates via /indicator</li><li>Private Telegram channel</li><li>MNQ, MES and MBT</li><li>No renewals</li></ul>
       <a class="btn primary big" href="#founding" data-checkout="founder" data-show="founder">Claim a founding spot</a>
+      <p class="spots" data-spots data-show="founder" hidden></p>
       <div class="soldout" data-show="regular">SOLD OUT · all 50 founding spots claimed</div>
     </div>
   </article>
@@ -314,7 +318,7 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
     <details><summary>How do I cancel?</summary><p>Founding 50 and Lifetime are single payments, so there is nothing to cancel. Once weekly and monthly plans open, you can cancel from the <a href="#" data-portal-link>manage subscription</a> page with your checkout email.</p></details>
     <details><summary>Can I get a refund?</summary><p>Payments are not refunded once you have claimed access in the bot (which sends the indicator file) or joined the channel, or for partial periods. If you were charged by mistake or could not get access, email <a href="mailto:swainwebstudio@gmail.com">swainwebstudio@gmail.com</a> within 7 days and we will make it right. Full policy: <a href="legal.html#refunds">Refunds</a>.</p></details>
     <details><summary>I paid but have no access</summary><p>Make sure you sent <code>/claim</code> with the exact email you used at checkout. If the bot still can't find your payment, email <a href="mailto:swainwebstudio@gmail.com">swainwebstudio@gmail.com</a> from your checkout email.</p></details>
-    <details><summary>What is your win rate?</summary><p>We don't sell on performance figures. Any stat on the indicator's dashboard is paper-tested: hypothetical results, and past results, real or simulated, do not predict future results. Judge the calls on your own chart before risking money.</p></details>
+    <details><summary>What is your win rate?</summary><p>We don't sell on performance figures. Any stat on the indicator's dashboard is paper-tested: hypothetical results, and past results, real or simulated, do not predict future results. Judge the calls on your own chart before risking money. Every call the signals post, wins and losses, is listed on the <a href="track-record.html">track record</a> page.</p></details>
   </div>
 </section>
 
@@ -325,7 +329,7 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
   <p>Paper-tested: hypothetical results. Signals can be wrong, late, or missed because of data, platform or connection issues. Any win rate, backtest or paper result shown, including on the indicator's dashboard, is based on simulated or hypothetical performance results that have certain inherent limitations. Unlike the results shown in an actual performance record, these results do not represent actual trading. Also, because these trades have not actually been executed, these results may have under- or over-compensated for the impact, if any, of certain market factors, such as lack of liquidity. Simulated or hypothetical trading programs in general are also subject to the fact that they are designed with the benefit of hindsight. No representation is being made that any account will or is likely to achieve profits or losses similar to these being shown. You are solely responsible for your own trading decisions and results.</p>
 </section>
 
-<footer><span>© 2026 PropCallSheet · <a href="legal.html#terms">Terms</a> · <a href="legal.html#privacy">Privacy</a> · <a href="legal.html#refunds">Refunds</a> · <a href="legal.html#disclaimer">Disclaimer</a> · <a href="legal.html#contact">Contact</a></span><span>TradingView is a trademark of TradingView, Inc. CME micro contracts are products of CME Group. Telegram is a trademark of Telegram FZ-LLC. Not affiliated with any of them.</span></footer>
+<footer><span>© 2026 PropCallSheet · <a href="track-record.html">Track record</a> · <a href="legal.html#terms">Terms</a> · <a href="legal.html#privacy">Privacy</a> · <a href="legal.html#refunds">Refunds</a> · <a href="legal.html#disclaimer">Disclaimer</a> · <a href="legal.html#contact">Contact</a></span><span>TradingView is a trademark of TradingView, Inc. CME micro contracts are products of CME Group. Telegram is a trademark of Telegram FZ-LLC. Not affiliated with any of them.</span></footer>
 </div>
 
 <div class="buybar" aria-label="Buy">
@@ -351,6 +355,17 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
   document.querySelectorAll('[data-subs-note]').forEach(function(n){if(anySub)n.hidden=true});
   document.querySelectorAll('[data-portal-link]').forEach(function(a){
     if(c.portal){a.href=c.portal;a.rel='noopener'}else{a.removeAttribute('href')}});})();
+
+// Founding 50 counter: reads data/stats.json (written from real Stripe sales). The line stays hidden if the file is
+// missing, unreadable, older than 3 days, or the numbers are not real whole numbers. Never shows a made-up count.
+(function(){var spots=document.querySelectorAll('[data-spots]');if(!spots.length||!window.fetch)return;
+  fetch('data/stats.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(s){
+    var t=s&&s.founding_total,left=s&&s.founding_left,g=String((s&&s.generated_utc)||'').trim().replace(' ','T');
+    if(g&&!/[zZ]|[+-]\d\d:?\d\d$/.test(g))g+='Z';
+    var age=Date.now()-Date.parse(g);
+    if(!(age>=-36e5&&age<=3*864e5))return;
+    if(!Number.isInteger(t)||!Number.isInteger(left)||t<=0||left<0||left>t)return;
+    spots.forEach(function(n){n.textContent=left+' of '+t+' Founding spots left';n.hidden=false})}).catch(function(){});})();
 </script>
 </body>
 </html>
