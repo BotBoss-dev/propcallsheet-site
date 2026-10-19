@@ -26,6 +26,7 @@ window.PCS_CHECKOUT = {
   portal:   ""
 };
 </script>
+<script src="track.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;600&family=JetBrains+Mono:wght@600&display=swap">
@@ -351,7 +352,9 @@ footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:
     var plan=a.dataset.checkout,url=c[plan]||'';
     if(plan==='founder'){if(regular)return off(a,'Sold out')}
     else if(plan==='weekly'||plan==='monthly'){if(!c.subsOpen||!url)return off(a,'Coming soon');anySub=true}
-    if(url){a.href=url;a.rel='noopener'}else off(a,'Opening soon')});
+    // window.PCS_SRC (track.js): the post this visitor came from, sent to Stripe so the bot counts sales per post
+    if(url){a.href=window.PCS_SRC?url+(url.indexOf('?')<0?'?':'&')+'client_reference_id='+encodeURIComponent(window.PCS_SRC):url;
+      a.rel='noopener'}else off(a,'Opening soon')});
   document.querySelectorAll('[data-subs-note]').forEach(function(n){if(anySub)n.hidden=true});
   document.querySelectorAll('[data-portal-link]').forEach(function(a){
     if(c.portal){a.href=c.portal;a.rel='noopener'}else{a.removeAttribute('href')}});})();
